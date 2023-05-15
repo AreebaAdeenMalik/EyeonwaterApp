@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Home1Activity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
+                            android:orientation="vertical">
+
+                                <GridLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:alignmentMode="alignMargins"
+                                    android:columnCount="1"
+                                    android:rowCount="3">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_rowWeight="1"
+                                            android:layout_columnWeight="1"
+                                            android:layout_margin="12dp"
+                                            app:cardCornerRadius="12dp"
+                                            app:cardElevation="20dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center"
+                                                    android:orientation="vertical"
+                                                    android:padding="6dp">
+
+                                                        <TextView
+                                                            android:id="@+id/textView1"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_marginTop="12dp"
+                                                            android:layout_marginBottom="10dp"
+                                                            android:text="How much water you Used Today!"
+                                                            android:textAlignment="center"
+                                                            android:textColor="@android:color/holo_blue_dark"
+                                                            android:textSize="24sp"
+                                                            android:textStyle="bold" />
+
+                                                        <ImageView
+                                                            android:layout_width="90dp"
+                                                            android:layout_height="90dp"
+                                                            android:src="@drawable/drop2" />
+
+                                                        <TextView
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_marginTop="12dp"
+                                                            android:text="2946"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="20dp"
+                                                            android:textStyle="bold" />
+
+                                                        <TextView
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:text="Liters/day"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="20dp"
+                                                            android:textStyle="bold" />
+
+                                                </LinearLayout>
+                                        </androidx.cardview.widget.CardView>
+                                </GridLayout>
+
+                                <GridLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:alignmentMode="alignMargins"
+                                    android:columnCount="1"
+                                    android:rowCount="3">
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_rowWeight="1"
+                                            android:layout_columnWeight="1"
+                                            android:layout_margin="12dp"
+                                            app:cardCornerRadius="12dp"
+                                            app:cardElevation="20dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center"
+                                                    android:orientation="horizontal"
+                                                    android:padding="6dp">
+
+                                                        <ImageView
+                                                            android:layout_width="100dp"
+                                                            android:layout_height="102dp"
+                                                            android:src="@drawable/tap1" />
+
+                                                        <RelativeLayout
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center">
+
+                                                                <ProgressBar
+                                                                    android:id="@+id/progressBar1"
+                                                                    style="@android:style/Widget.Holo.Light.ProgressBar.Inverse"
+                                                                    android:layout_width="100dp"
+                                                                    android:layout_height="102dp"
+                                                                    android:layout_gravity="center"
+                                                                    android:layout_marginStart="10dp"
+                                                                    android:background="#2DEBF1F4"
+                                                                    android:foregroundTint="#3ACBF0"
+                                                                    android:indeterminate="true"
+                                                                    android:indeterminateTint="#2196F3"
+                                                                    android:progressTint="#2196F3"
+                                                                    android:textAlignment="center" />
+
+                                                                <TextView
+                                                                    android:layout_width="wrap_content"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_centerInParent="true"
+                                                                    android:text="200L"
+                                                                    android:textSize="20dp"
+                                                                    android:textStyle="bold" />
+
+                                                        </RelativeLayout>
+
+                                                        <Switch
+                                                            android:id="@+id/switch1"
+                                                            android:layout_width="107dp"
+                                                            android:layout_height="48dp"
+                                                            android:layout_marginStart="10dp"
+                                                            android:text="Switch"
+                                                            android:textAlignment="center" />
+
+                                                </LinearLayout>
+                                        </androidx.cardview.widget.CardView>
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_rowWeight="1"
+                                            android:layout_columnWeight="1"
+                                            android:layout_margin="12dp"
+                                            app:cardCornerRadius="12dp"
+                                            app:cardElevation="20dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center"
+                                                    android:orientation="horizontal"
+                                                    android:padding="6dp">
+
+                                                        <ImageView
+                                                            android:layout_width="100dp"
+                                                            android:layout_height="102dp"
+                                                            android:src="@drawable/tap1" />
+
+                                                        <RelativeLayout
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center">
+
+                                                                <ProgressBar
+                                                                    android:id="@+id/progressBar2"
+                                                                    style="@android:style/Widget.Holo.Light.ProgressBar.Inverse"
+                                                                    android:layout_width="100dp"
+                                                                    android:layout_height="102dp"
+                                                                    android:layout_gravity="center"
+                                                                    android:layout_marginStart="10dp"
+                                                                    android:background="#2DEBF1F4"
+                                                                    android:foregroundTint="#3ACBF0"
+                                                                    android:indeterminate="true"
+                                                                    android:indeterminateTint="#2196F3"
+                                                                    android:progressTint="#2196F3"
+                                                                    android:textAlignment="center" />
+
+                                                                <TextView
+                                                                    android:layout_width="wrap_content"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_centerInParent="true"
+                                                                    android:text="200L"
+                                                                    android:textSize="20dp"
+                                                                    android:textStyle="bold" />
+
+                                                        </RelativeLayout>
+
+                                                        <Switch
+                                                            android:id="@+id/switch2"
+                                                            android:layout_width="107dp"
+                                                            android:layout_height="48dp"
+                                                            android:layout_marginStart="10dp"
+                                                            android:text="Switch"
+                                                            android:textAlignment="center" />
+
+                                                </LinearLayout>
+                                        </androidx.cardview.widget.CardView>
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_rowWeight="1"
+                                            android:layout_columnWeight="1"
+                                            android:layout_margin="12dp"
+                                            app:cardCornerRadius="12dp"
+                                            app:cardElevation="20dp">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:gravity="center"
+                                                    android:orientation="horizontal"
+                                                    android:padding="6dp">
+
+                                                        <ImageView
+                                                            android:layout_width="100dp"
+                                                            android:layout_height="102dp"
+                                                            android:layout_gravity="left"
+                                                            android:src="@drawable/tap1" />
+
+                                                        <RelativeLayout
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center">
+
+                                                                <ProgressBar
+                                                                    android:id="@+id/progressBar3"
+                                                                    style="@android:style/Widget.Holo.Light.ProgressBar.Inverse"
+                                                                    android:layout_width="100dp"
+                                                                    android:layout_height="102dp"
+                                                                    android:layout_gravity="center"
+                                                                    android:layout_marginStart="10dp"
+                                                                    android:background="#2DEBF1F4"
+                                                                    android:foregroundTint="#3ACBF0"
+                                                                    android:indeterminate="true"
+                                                                    android:indeterminateTint="#2196F3"
+                                                                    android:progressTint="#2196F3"
+                                                                    android:textAlignment="center" />
+
+                                                                <TextView
+                                                                    android:layout_width="wrap_content"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_centerInParent="true"
+                                                                    android:text="200L"
+                                                                    android:textSize="20dp"
+                                                                    android:textStyle="bold" />
+
+                                                        </RelativeLayout>
+
+                                                        <Switch
+                                                            android:id="@+id/switch3"
+                                                            android:layout_width="107dp"
+                                                            android:layout_height="48dp"
+                                                            android:layout_marginStart="10dp"
+                                                            android:text="Switch"
+                                                            android:textAlignment="center" />
+
+                                                </LinearLayout>
+                                        </androidx.cardview.widget.CardView>
+                                </GridLayout>
+                        </LinearLayout>
+                </ScrollView>
+        </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
