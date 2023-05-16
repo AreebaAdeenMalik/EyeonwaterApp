@@ -5,8 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
     tools:context=".LogoutActivity">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -65,9 +73,9 @@
         <TextView
             android:id="@+id/textView5"
             style="@style/Widget.MaterialComponents.Snackbar.TextView"
-            android:layout_width="194dp"
-            android:layout_height="56dp"
-            android:layout_marginBottom="216dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="56dp"
             android:foregroundGravity="center"
             android:gravity="center"
             android:scrollbarDefaultDelayBeforeFade="500"
@@ -78,16 +86,15 @@
             android:textColor="#0C0909"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginBottom="128dp"
+            android:layout_marginBottom="132dp"
             android:background="#F4EFEF"
             android:backgroundTint="#FFFCFC"
             android:text="Yes"
@@ -97,14 +104,14 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.291"
+            app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginBottom="128dp"
+            android:layout_marginBottom="132dp"
             android:background="#F4EFEF"
             android:backgroundTint="#FFFCFC"
             android:text="No"
@@ -114,7 +121,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.319"
+            app:layout_constraintHorizontal_bias="0.312"
             app:layout_constraintStart_toEndOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
