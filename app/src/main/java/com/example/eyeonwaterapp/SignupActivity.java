@@ -2,11 +2,8 @@ package com.example.eyeonwaterapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -16,14 +13,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import Model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -31,6 +24,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText signupname, signupusername, signuppassword, signupemail;
     Button signupbutton, loginbutton;
     CheckBox showcheck_btn1;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +33,7 @@ public class SignupActivity extends AppCompatActivity {
 
         back2 = findViewById(R.id.ivBack1);
         showcheck_btn1 = findViewById(R.id.checkbox_btn1);
+        auth = FirebaseAuth.getInstance();
 
         signupname = findViewById(R.id.name);
         signupusername = findViewById(R.id.username);
@@ -50,92 +45,56 @@ public class SignupActivity extends AppCompatActivity {
         showcheck_btn1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
+                if (b) {
                     //for show password
                     signuppassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else {
+                } else {
                     //for hide password
                     signuppassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
+    signupbutton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String name, username, email, password;
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference table_user = database.getReference("User");
+            name = signupname.getText().toString();
+            username = signupusername.getText().toString();
+            email = signupemail.getText().toString();
+            password = signuppassword.getText().toString();
 
-        signupbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final ProgressDialog mDialog = new ProgressDialog(SignupActivity.this);
-                mDialog.setMessage("Please waiting...");
-                mDialog.show();
-
-                table_user.addValueEventListener(new ValueEventListener() {
+            if (username.isEmpty()){
+                signupusername.setError("Please enter your User Name");
+                signupusername.requestFocus();
+            } else if (name.isEmpty()) {
+                signupname.setError("Please enter your Name");
+                signupname.requestFocus();
+            }else if (email.isEmpty()) {
+                signupemail.setError("Please enter your Email");
+                signupemail.requestFocus();
+            }else if (password.isEmpty()) {
+                signupusername.setError("Please enter your Password");
+                signupusername.requestFocus();
+            }else {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        if (snapshot.child(signupusername.getText().toString()).exists())
-                        {
-                            mDialog.dismiss();
-                            Toast.makeText(SignupActivity.this, "Username already register", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            mDialog.dismiss();
-                            User user = new User(signupname.getText().toString(), signuppassword.getText().toString(), signupemail.getText().toString());
-                            table_user.child(signupusername.getText().toString()).setValue(user);
-                            Toast.makeText(SignupActivity.this, "Signup successfully ! Now you can Login !", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                             finish();
+                        }else {
+                            Toast.makeText(SignupActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
-                String fullname = signupname.getText().toString();
-                String username = signupusername.getText().toString();
-                String email = signupemail.getText().toString();
-                String password = signuppassword.getText().toString();
-
-                //validate input values
-                if (TextUtils.isEmpty(fullname)) {
-                    signupname.setError("Full Name is required");
-                    signupname.requestFocus();
-                    return;
-                }
-                if (TextUtils.isEmpty(username)) {
-                    signupusername.setError("User Name is required");
-                    signupusername.requestFocus();
-                }
-                if (TextUtils.isEmpty(email)) {
-                    signupemail.setError("Email is required");
-                    signupemail.requestFocus();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    signuppassword.setError("Password is required");
-                    signuppassword.requestFocus();
-                    return;
-                }
             }
-        });
-
+        }
+    });
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        back2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignupActivity.this, MainActivity2.class);
                 startActivity(intent);
             }
         });

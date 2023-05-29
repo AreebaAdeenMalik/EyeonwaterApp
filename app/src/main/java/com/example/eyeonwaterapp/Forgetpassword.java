@@ -74,7 +74,7 @@ public class Forgetpassword extends AppCompatActivity {
                 dialog.dismiss();
                 if (task.isSuccessful()){
                     Toast.makeText(Forgetpassword.this, "Check Your Email", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Forgetpassword.this, LoginActivity.class));
+                    startActivity(new Intent(Forgetpassword.this, SuccessActivity.class));
                     finish();
                 }else {
                     Toast.makeText(Forgetpassword.this, "Error: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();

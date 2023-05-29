@@ -14,6 +14,7 @@ public class LogoutActivity extends DrawerBaseActivity {
 
     Button btn1, btn2;
     ActivityLogoutBinding activityLogoutBinding;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +25,14 @@ public class LogoutActivity extends DrawerBaseActivity {
 
         btn1 = findViewById(R.id.button);
         btn2  = findViewById(R.id.button2);
+        auth = FirebaseAuth.getInstance();
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
+                auth.signOut();
                 startActivity(new Intent(LogoutActivity.this, LoginActivity.class));
+                finish();
             }
         });
 

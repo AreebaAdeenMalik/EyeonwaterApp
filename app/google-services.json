@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1080287899040",
+    "firebase_url": "https://eyeonwaterapp-default-rtdb.firebaseio.com",
     "project_id": "eyeonwaterapp",
     "storage_bucket": "eyeonwaterapp.appspot.com"
   },
