@@ -8,9 +8,17 @@ import android.widget.TextView;
 
 import com.example.eyeonwaterapp.databinding.ActivityHistory2Binding;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -19,6 +27,9 @@ import java.util.Calendar;
 public class History2Activity extends DrawerBaseActivity {
 
     LineChart mpLineChart;
+    int colorArray[] = {R.color.color1, R.color.color2, R.color.color3};
+    int[] colorClassArray = new int[] {Color.BLUE, Color.CYAN, Color.GREEN, Color.RED};
+    String[] legendName = {"Tap1", "Tap2", "Tap3"};
     ActivityHistory2Binding activityHistory2Binding;
 
 
@@ -45,12 +56,53 @@ public class History2Activity extends DrawerBaseActivity {
         dataSets.add(lineDataSet3);
 
         mpLineChart.setBackgroundColor(Color.WHITE);
+        mpLineChart.setDrawGridBackground(true);
+        mpLineChart.setDrawBorders(true);
+        mpLineChart.setBorderWidth(2);
+        mpLineChart.setBorderColor(Color.BLUE);
+
+        lineDataSet1.setLineWidth(4);
+        lineDataSet1.setColor(Color.BLUE);
+        lineDataSet1.setDrawCircles(true);
+        lineDataSet1.setDrawCircleHole(true);
+        lineDataSet1.setCircleColor(Color.BLUE);
+        lineDataSet1.setCircleHoleColor(Color.GRAY);
+        lineDataSet1.setCircleRadius(5);
+        lineDataSet1.setCircleHoleRadius(4);
+        lineDataSet1.setValueTextSize(10);
+        lineDataSet1.setValueTextColor(Color.BLUE);
+        lineDataSet1.enableDashedLine(5,10, 0);
+
+        Legend legend = mpLineChart.getLegend();
+        legend.setEnabled(true);
+        legend.setTextColor(Color.BLUE);
+        legend.setTextSize(12);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setFormSize(10);
+        legend.setXEntrySpace(20);
+        legend.setFormToTextSpace(10);
+
+        LegendEntry[] legendEntries = new LegendEntry[3];
+        for (int i=0; i<legendEntries.length; i++)
+        {
+            LegendEntry entry = new LegendEntry();
+            entry.formColor = colorClassArray[i];
+            entry.label = String.valueOf(legendName[i]);
+            legendEntries[i] = entry;
+        }
+        legend.setCustom(legendEntries);
+
+        Description description = new Description();
+        description.setText("This Week Water Consumption");
+        description.setTextColor(Color.BLUE);
+        description.setTextSize(15);
+        mpLineChart.setDescription(description);
 
         LineData data = new LineData(lineDataSet1, lineDataSet2, lineDataSet3);
         mpLineChart.setData(data);
+        mpLineChart.animateX(5000);
         mpLineChart.invalidate();
     }
-
     private ArrayList<Entry> dataValues1() {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();
         dataVals.add(new Entry(0, 20));

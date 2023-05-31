@@ -108,7 +108,7 @@
                                     android:rowCount="3">
 
                                         <androidx.cardview.widget.CardView
-                                            android:layout_width="wrap_content"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_rowWeight="1"
                                             android:layout_columnWeight="1"
@@ -124,8 +124,8 @@
                                                     android:padding="6dp">
 
                                                         <ImageView
-                                                            android:layout_width="100dp"
-                                                            android:layout_height="102dp"
+                                                            android:layout_width="80dp"
+                                                            android:layout_height="match_parent"
                                                             android:src="@drawable/tap1" />
 
                                                         <RelativeLayout
@@ -159,7 +159,7 @@
 
                                                         <Switch
                                                             android:id="@+id/switch1"
-                                                            android:layout_width="107dp"
+                                                            android:layout_width="wrap_content"
                                                             android:layout_height="48dp"
                                                             android:layout_marginStart="10dp"
                                                             android:text="Switch"
@@ -169,7 +169,7 @@
                                         </androidx.cardview.widget.CardView>
 
                                         <androidx.cardview.widget.CardView
-                                            android:layout_width="wrap_content"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_rowWeight="1"
                                             android:layout_columnWeight="1"
@@ -185,8 +185,8 @@
                                                     android:padding="6dp">
 
                                                         <ImageView
-                                                            android:layout_width="100dp"
-                                                            android:layout_height="102dp"
+                                                            android:layout_width="80dp"
+                                                            android:layout_height="match_parent"
                                                             android:src="@drawable/tap1" />
 
                                                         <RelativeLayout
@@ -220,7 +220,7 @@
 
                                                         <Switch
                                                             android:id="@+id/switch2"
-                                                            android:layout_width="107dp"
+                                                            android:layout_width="wrap_content"
                                                             android:layout_height="48dp"
                                                             android:layout_marginStart="10dp"
                                                             android:text="Switch"
@@ -230,7 +230,7 @@
                                         </androidx.cardview.widget.CardView>
 
                                         <androidx.cardview.widget.CardView
-                                            android:layout_width="wrap_content"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_rowWeight="1"
                                             android:layout_columnWeight="1"
@@ -246,8 +246,8 @@
                                                     android:padding="6dp">
 
                                                         <ImageView
-                                                            android:layout_width="100dp"
-                                                            android:layout_height="102dp"
+                                                            android:layout_width="80dp"
+                                                            android:layout_height="match_parent"
                                                             android:layout_gravity="left"
                                                             android:src="@drawable/tap1" />
 
@@ -282,7 +282,7 @@
 
                                                         <Switch
                                                             android:id="@+id/switch3"
-                                                            android:layout_width="107dp"
+                                                            android:layout_width="wrap_content"
                                                             android:layout_height="48dp"
                                                             android:layout_marginStart="10dp"
                                                             android:text="Switch"

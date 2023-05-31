@@ -20,13 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".History1Activity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MytapsActivity"
             android:exported="true" />
@@ -38,12 +32,15 @@
             android:exported="true" />
         <activity
             android:name=".Home1Activity"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SuccessActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Forgetpassword1"
             android:exported="true" />
         <activity
             android:name=".Forgetpassword"
