@@ -7,24 +7,21 @@ import android.widget.TextView;
 
 import com.example.eyeonwaterapp.databinding.ActivityHistory3Binding;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class History3Activity extends DrawerBaseActivity {
-
     LineChart mpLineChart;
     int colorArray[] = {R.color.color1, R.color.color2, R.color.color3};
     int[] colorClassArray = new int[] {Color.BLUE, Color.CYAN, Color.GREEN, Color.RED};
@@ -40,10 +37,10 @@ public class History3Activity extends DrawerBaseActivity {
         allocateActivityTitle("Monthly History");
 
         Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        String currentMonth = new SimpleDateFormat("MMMM", Locale.getDefault()).format(new Date());
 
-        TextView textViewDate = findViewById(R.id.textView8);
-        textViewDate.setText(currentDate);
+        TextView textViewMonth = findViewById(R.id.textView8);
+        textViewMonth.setText(currentMonth);
 
         mpLineChart = (LineChart) findViewById(R.id.lineChart2);
         LineDataSet lineDataSet1 = new LineDataSet(dataValues1(), "Tap 1");
