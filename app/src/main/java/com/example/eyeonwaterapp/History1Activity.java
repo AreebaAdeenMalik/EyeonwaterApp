@@ -2,9 +2,9 @@ package com.example.eyeonwaterapp;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.util.Log;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import com.example.eyeonwaterapp.databinding.ActivityHistory1Binding;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -18,8 +18,13 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-
-import java.text.DateFormat;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -38,9 +43,14 @@ public class History1Activity extends DrawerBaseActivity {
         setContentView(activityHistory1Binding.getRoot());
         allocateActivityTitle("Daily History");
 
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);   // Enable offline persistence if needed
 
+        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat.format(calendar.getTime());
         TextView textViewDate = findViewById(R.id.textView6);
         textViewDate.setText(currentDate);
 
@@ -105,6 +115,32 @@ public class History1Activity extends DrawerBaseActivity {
         mpLineChart.setData(data);
         mpLineChart.animateX(5000);
         mpLineChart.invalidate();
+
+        dayRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int sum = 0;
+                for (DataSnapshot monthSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot daySnapshot : monthSnapshot.getChildren()) {
+                        String date = daySnapshot.getKey();
+                        if (currentDate.equals(date)) { // Match the date
+                            for (DataSnapshot hourSnapshot : daySnapshot.getChildren()) {
+                                int hourData = hourSnapshot.getValue(Integer.class);
+                                sum += hourData;
+                            }
+                        }
+                    }
+                }
+                TextView totalDay = findViewById(R.id.daytext);
+                totalDay.setText(String.valueOf(sum));
+                Log.d("Home1Activity", "Total Sum: " + sum);
+            }
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                // Handle the error
+                Log.e("Home1Activity", "Database Error: " + error.getMessage());
+            }
+        });
     }
 
     private ArrayList<Entry> dataValues1() {

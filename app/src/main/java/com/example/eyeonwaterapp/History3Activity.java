@@ -1,10 +1,10 @@
 package com.example.eyeonwaterapp;
 
-
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import com.example.eyeonwaterapp.databinding.ActivityHistory3Binding;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -13,8 +13,12 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-
-import java.text.DateFormat;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,14 +31,17 @@ public class History3Activity extends DrawerBaseActivity {
     int[] colorClassArray = new int[] {Color.BLUE, Color.CYAN, Color.GREEN, Color.RED};
     String[] legendName = {"Tap1", "Tap2", "Tap3"};
     ActivityHistory3Binding activityHistory3Binding;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityHistory3Binding = ActivityHistory3Binding.inflate(getLayoutInflater());
         setContentView(activityHistory3Binding.getRoot());
         allocateActivityTitle("Monthly History");
+
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);   // Enable offline persistence if needed
+
+        DatabaseReference monthRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
 
         Calendar calendar = Calendar.getInstance();
         String currentMonth = new SimpleDateFormat("MMMM", Locale.getDefault()).format(new Date());
@@ -98,8 +105,35 @@ public class History3Activity extends DrawerBaseActivity {
         mpLineChart.setData(data);
         mpLineChart.animateX(5000);
         mpLineChart.invalidate();
+        monthRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int sum = 0;
+                for (DataSnapshot monthSnapshot : snapshot.getChildren()) {
+                    // Loop through each month node
+                    for (DataSnapshot daySnapshot : monthSnapshot.getChildren()) {
+                        // Loop through each day node
+                        for (DataSnapshot hourSnapshot : daySnapshot.getChildren()) {
+                            // Loop through each hour node
+                            Integer hourData = hourSnapshot.getValue(Integer.class);
+                            Log.d("History3Activity", "Hour Data: " + hourData);
+                            if (hourData != null) {
+                                sum += hourData;
+                            }
+                        }
+                    }
+                }
+                TextView monthtext = findViewById(R.id.monthData);
+                monthtext.setText(String.valueOf(sum));
+                Log.d("History3Activity", "Total Sum: " + sum);
+            }
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                // Handle the error
+                Log.e("History3Activity", "Database Error: " + error.getMessage());
+            }
+        });
     }
-
     private ArrayList<Entry> dataValues1() {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();
         dataVals.add(new Entry(0, 20));

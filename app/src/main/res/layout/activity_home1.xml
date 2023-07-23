@@ -92,18 +92,18 @@
                                                             android:src="@drawable/drop2" />
 
                                                         <TextView
+                                                            android:id="@+id/total"
                                                             android:layout_width="wrap_content"
                                                             android:layout_height="wrap_content"
                                                             android:layout_marginTop="10dp"
-                                                            android:text="600"
                                                             android:textColor="@color/black"
-                                                            android:textSize="20dp"
+                                                            android:textSize="30dp"
                                                             android:textStyle="bold" />
 
                                                         <TextView
                                                             android:layout_width="wrap_content"
                                                             android:layout_height="wrap_content"
-                                                            android:text="Liters/day"
+                                                            android:text="ml/day"
                                                             android:textColor="@color/black"
                                                             android:textSize="20dp"
                                                             android:textStyle="bold" />
@@ -161,13 +161,13 @@
                                                                     android:indeterminateTint="#2196F3"
                                                                     android:progressTint="#2196F3"
                                                                     android:textAlignment="center" />
-
                                                                 <TextView
+                                                                    android:id="@+id/tap1text"
                                                                     android:layout_width="wrap_content"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_centerInParent="true"
-                                                                    android:text="200L"
                                                                     android:textSize="20dp"
+                                                                    android:textColor="@color/black"
                                                                     android:textStyle="bold" />
 
                                                         </RelativeLayout>
@@ -225,11 +225,12 @@
                                                                     android:textAlignment="center" />
 
                                                                 <TextView
+                                                                    android:id="@+id/tap2text"
                                                                     android:layout_width="wrap_content"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_centerInParent="true"
-                                                                    android:text="200L"
                                                                     android:textSize="20dp"
+                                                                    android:textColor="@color/black"
                                                                     android:textStyle="bold" />
 
                                                         </RelativeLayout>
@@ -288,11 +289,12 @@
                                                                     android:textAlignment="center" />
 
                                                                 <TextView
+                                                                    android:id="@+id/tap3text"
                                                                     android:layout_width="wrap_content"
                                                                     android:layout_height="wrap_content"
                                                                     android:layout_centerInParent="true"
-                                                                    android:text="200L"
                                                                     android:textSize="20dp"
+                                                                    android:textColor="@color/black"
                                                                     android:textStyle="bold" />
 
                                                         </RelativeLayout>

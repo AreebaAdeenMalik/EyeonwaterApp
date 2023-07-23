@@ -1,17 +1,13 @@
 package com.example.eyeonwaterapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.TextView;
-
 import com.example.eyeonwaterapp.databinding.ActivityMytapsBinding;
-
 import java.text.DateFormat;
 import java.util.Calendar;
 
 public class MytapsActivity extends DrawerBaseActivity {
-
     ActivityMytapsBinding activityMytapsBinding;
 
     @Override
