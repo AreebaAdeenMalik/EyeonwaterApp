@@ -1,5 +1,6 @@
 package com.example.eyeonwaterapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
@@ -19,18 +20,30 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class History2Activity extends DrawerBaseActivity {
-
     LineChart mpLineChart;
     int colorArray[] = {R.color.color1, R.color.color2, R.color.color3};
     int[] colorClassArray = new int[] {Color.BLUE, Color.CYAN, Color.GREEN, Color.RED};
     String[] legendName = {"Tap1", "Tap2", "Tap3"};
     ActivityHistory2Binding activityHistory2Binding;
+    private DatabaseReference weekRef;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 
     @Override
@@ -40,7 +53,51 @@ public class History2Activity extends DrawerBaseActivity {
         setContentView(activityHistory2Binding.getRoot());
         allocateActivityTitle("Weekly History");
 
+        FirebaseApp.initializeApp(this);
+        weekRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
+
+        // Calculate the date seven days ago
         Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        Date sevenDaysAgo = calendar.getTime();
+
+        weekRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalDataLastSevenDays = 0;
+
+                // Iterate through each day in the month
+                for (DataSnapshot monthSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot daySnapshot : monthSnapshot.getChildren()) {
+                        String dateString = daySnapshot.getKey();
+
+                        try {
+                            Date date = dateFormat.parse(dateString);
+
+                            // Check if the date is within the last seven days
+                            if (date.after(sevenDaysAgo) || date.equals(sevenDaysAgo)) {
+                                // Sum up the data for each hour of the day
+                                for (DataSnapshot hourSnapshot : daySnapshot.getChildren()) {
+                                    int hourData = hourSnapshot.getValue(Integer.class);
+                                    totalDataLastSevenDays += hourData;
+                                }
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                TextView totalWeek = findViewById(R.id.weektext);
+                totalWeek.setText(String.valueOf(totalDataLastSevenDays));
+                // Now you have the total data for the last seven days
+                // Do whatever you want to do with the totalDataLastSevenDays variable
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Handle any errors
+            }
+        });
+
         String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 
         TextView textViewDate = findViewById(R.id.textView7);

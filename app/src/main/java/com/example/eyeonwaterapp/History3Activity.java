@@ -39,8 +39,6 @@ public class History3Activity extends DrawerBaseActivity {
         allocateActivityTitle("Monthly History");
 
         FirebaseApp.initializeApp(this);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);   // Enable offline persistence if needed
-
         DatabaseReference monthRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
 
         Calendar calendar = Calendar.getInstance();
@@ -48,6 +46,34 @@ public class History3Activity extends DrawerBaseActivity {
 
         TextView textViewMonth = findViewById(R.id.textView8);
         textViewMonth.setText(currentMonth);
+        monthRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int monthsum = 0;
+                for (DataSnapshot monthSnapshot : snapshot.getChildren()) {
+                    // Loop through each month node
+                    for (DataSnapshot daySnapshot : monthSnapshot.getChildren()) {
+                        // Loop through each day node
+                        for (DataSnapshot hourSnapshot : daySnapshot.getChildren()) {
+                            // Loop through each hour node
+                            Integer hourData = hourSnapshot.getValue(Integer.class);
+                            Log.d("History3Activity", "Hour Data: " + hourData);
+                            if (hourData != null) {
+                                monthsum += hourData;
+                            }
+                        }
+                    }
+                }
+                TextView monthtext = findViewById(R.id.monthData);
+                monthtext.setText(String.valueOf(monthsum));
+                Log.d("History3Activity", "Total Sum: " + monthsum);
+            }
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                // Handle the error
+                Log.e("History3Activity", "Database Error: " + error.getMessage());
+            }
+        });
 
         mpLineChart = (LineChart) findViewById(R.id.lineChart2);
         LineDataSet lineDataSet1 = new LineDataSet(dataValues1(), "Tap 1");
@@ -105,34 +131,6 @@ public class History3Activity extends DrawerBaseActivity {
         mpLineChart.setData(data);
         mpLineChart.animateX(5000);
         mpLineChart.invalidate();
-        monthRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int sum = 0;
-                for (DataSnapshot monthSnapshot : snapshot.getChildren()) {
-                    // Loop through each month node
-                    for (DataSnapshot daySnapshot : monthSnapshot.getChildren()) {
-                        // Loop through each day node
-                        for (DataSnapshot hourSnapshot : daySnapshot.getChildren()) {
-                            // Loop through each hour node
-                            Integer hourData = hourSnapshot.getValue(Integer.class);
-                            Log.d("History3Activity", "Hour Data: " + hourData);
-                            if (hourData != null) {
-                                sum += hourData;
-                            }
-                        }
-                    }
-                }
-                TextView monthtext = findViewById(R.id.monthData);
-                monthtext.setText(String.valueOf(sum));
-                Log.d("History3Activity", "Total Sum: " + sum);
-            }
-            @Override
-            public void onCancelled (@NonNull DatabaseError error){
-                // Handle the error
-                Log.e("History3Activity", "Database Error: " + error.getMessage());
-            }
-        });
     }
     private ArrayList<Entry> dataValues1() {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();

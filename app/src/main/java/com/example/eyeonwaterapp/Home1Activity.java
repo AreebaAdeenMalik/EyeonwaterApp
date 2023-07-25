@@ -18,7 +18,6 @@ import java.util.Calendar;
 
 public class Home1Activity extends DrawerBaseActivity {
     ActivityHome1Binding activityHome1Binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
