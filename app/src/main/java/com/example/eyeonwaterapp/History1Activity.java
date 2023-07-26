@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -66,13 +67,13 @@ public class History1Activity extends DrawerBaseActivity {
                 }
                 TextView totalDay = findViewById(R.id.daytext);
                 totalDay.setText(String.valueOf(daysum));
-                Log.d("Home1Activity", "Total Sum: " + daysum);
+                Log.d("History1Activity", "Total Sum: " + daysum);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle the error
-                Log.e("Home1Activity", "Database Error: " + error.getMessage());
+                Log.e("History1Activity", "Database Error: " + error.getMessage());
             }
         });
         mpLineChart = (LineChart) findViewById(R.id.lineChart);
@@ -108,7 +109,7 @@ public class History1Activity extends DrawerBaseActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle the error
-                Log.e("Home1Activity", "Database Error: " + error.getMessage());
+                Log.e("History1Activity", "Database Error: " + error.getMessage());
             }
         });
     }
@@ -129,9 +130,12 @@ public class History1Activity extends DrawerBaseActivity {
         lineDataSet1.setCircleHoleColor(Color.GRAY);
         lineDataSet1.setCircleRadius(5);
         lineDataSet1.setCircleHoleRadius(4);
-        lineDataSet1.setValueTextSize(10);
+        lineDataSet1.setValueTextSize(15);
         lineDataSet1.setValueTextColor(Color.BLUE);
         lineDataSet1.enableDashedLine(5, 5, 0);
+
+        lineDataSet1.setDrawFilled(true);
+        lineDataSet1.setFillColor(Color.parseColor("#006DFF"));
 
         Legend legend = mpLineChart.getLegend();
         legend.setEnabled(true);
@@ -155,6 +159,8 @@ public class History1Activity extends DrawerBaseActivity {
         YAxis yAxisLeft = mpLineChart.getAxisLeft();
         YAxis yAxisRight = mpLineChart.getAxisRight();
 
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Set the X-axis position to bottom
+
         xAxis.setValueFormatter(new MyAxisValueFormatter());
         // Assuming your data starts from hour 0 and goes up to hour 23, set the min and max values accordingly
         xAxis.setAxisMinimum(0f);
@@ -170,6 +176,8 @@ public class History1Activity extends DrawerBaseActivity {
         description.setTextSize(10);
         mpLineChart.setDescription(description);
 
+        mpLineChart.getAxisRight().setEnabled(false); // Disable the right Y-axis
+
         LineData data = new LineData(lineDataSet1);
         mpLineChart.setData(data);
         mpLineChart.animateX(5000);
@@ -183,7 +191,7 @@ public class History1Activity extends DrawerBaseActivity {
         }
         return dataVals;
     }
-    private static class MyAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {
+    static class MyAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
             return "Hour " + (int) value;
