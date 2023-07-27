@@ -44,7 +44,7 @@ public class History2Activity extends DrawerBaseActivity {
     ActivityHistory2Binding activityHistory2Binding;
     private DatabaseReference weekRef;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
+    private ArrayList<Integer> totalDataLastSevenDays = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +58,18 @@ public class History2Activity extends DrawerBaseActivity {
 
         // Calculate the date seven days ago
         Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat.format(calendar.getTime());
+        TextView textViewDate = findViewById(R.id.textView7);
+        textViewDate.setText(currentDate);
+
         calendar.add(Calendar.DAY_OF_MONTH, -7);
         Date sevenDaysAgo = calendar.getTime();
 
         weekRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int totalDataLastSevenDays = 0;
+                ArrayList<Integer> dailyData = new ArrayList<>();
 
                 // Iterate through each day in the month
                 for (DataSnapshot monthSnapshot : snapshot.getChildren()) {
@@ -77,10 +82,13 @@ public class History2Activity extends DrawerBaseActivity {
                             // Check if the date is within the last seven days
                             if (date.after(sevenDaysAgo) || date.equals(sevenDaysAgo)) {
                                 // Sum up the data for each hour of the day
+                                int dailyTotal = 0;
+                                // Sum up the data for each hour of the day
                                 for (DataSnapshot hourSnapshot : daySnapshot.getChildren()) {
                                     int hourData = hourSnapshot.getValue(Integer.class);
-                                    totalDataLastSevenDays += hourData;
+                                    dailyTotal += hourData;
                                 }
+                                dailyData.add(dailyTotal);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -88,47 +96,23 @@ public class History2Activity extends DrawerBaseActivity {
                     }
                 }
                 TextView totalWeek = findViewById(R.id.weektext);
-                totalWeek.setText(String.valueOf(totalDataLastSevenDays));
-                // Now you have the total data for the last seven days
-                // Do whatever you want to do with the totalDataLastSevenDays variable
+                totalWeek.setText(String.valueOf(getTotalDataLastSevenDays(dailyData)));
+                updateLineChart(dailyData);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //Handle any errors
             }
         });
-
-        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-
-        TextView textViewDate = findViewById(R.id.textView7);
-        textViewDate.setText(currentDate);
-
-        mpLineChart = (LineChart) findViewById(R.id.lineChart1);
-        LineDataSet lineDataSet1 = new LineDataSet(dataValues1(), "Tap 1");
-        LineDataSet lineDataSet2 = new LineDataSet(dataValues2(), "Tap 2");
-        LineDataSet lineDataSet3 = new LineDataSet(dataValues3(), "Tap 3");
-        ArrayList<LineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet1);
-        dataSets.add(lineDataSet2);
-        dataSets.add(lineDataSet3);
-
+        mpLineChart = (LineChart) findViewById(R.id.lineChart2);
+        setupLineChart();
+    }
+    private void setupLineChart() {
         mpLineChart.setBackgroundColor(Color.WHITE);
-        mpLineChart.setDrawGridBackground(true);
+        mpLineChart.setDrawGridBackground(false);
         mpLineChart.setDrawBorders(true);
         mpLineChart.setBorderWidth(2);
         mpLineChart.setBorderColor(Color.BLUE);
-
-        lineDataSet1.setLineWidth(4);
-        lineDataSet1.setColor(Color.BLUE);
-        lineDataSet1.setDrawCircles(true);
-        lineDataSet1.setDrawCircleHole(true);
-        lineDataSet1.setCircleColor(Color.BLUE);
-        lineDataSet1.setCircleHoleColor(Color.GRAY);
-        lineDataSet1.setCircleRadius(5);
-        lineDataSet1.setCircleHoleRadius(4);
-        lineDataSet1.setValueTextSize(10);
-        lineDataSet1.setValueTextColor(Color.BLUE);
-        lineDataSet1.enableDashedLine(5,10, 0);
 
         Legend legend = mpLineChart.getLegend();
         legend.setEnabled(true);
@@ -152,44 +136,59 @@ public class History2Activity extends DrawerBaseActivity {
         Description description = new Description();
         description.setText("This Week Water Consumption");
         description.setTextColor(Color.BLUE);
-        description.setTextSize(15);
+        description.setTextSize(10);
         mpLineChart.setDescription(description);
 
-        LineData data = new LineData(lineDataSet1, lineDataSet2, lineDataSet3);
+        mpLineChart.getAxisRight().setEnabled(false); // Disable the right Y-axis
+
+        XAxis xAxis = mpLineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+        xAxis.setLabelCount(7); // Set the label count to 7 for 7 days
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                int index = (int) value;
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH, -6 + index); // Start from the first day (index 0)
+                Date date = calendar.getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                return sdf.format(date);
+            }
+        });
+    }
+    private int getTotalDataLastSevenDays(ArrayList<Integer> dataValues) {
+        int total = 0;
+        for (Integer value : dataValues) {
+            total += value;
+        }
+        return total;
+    }
+    private void updateLineChart(ArrayList<Integer> dataValues) {
+        ArrayList<Entry> entries = new ArrayList<>();
+
+        for (int i = 0; i < dataValues.size(); i++) {
+            entries.add(new Entry(i, dataValues.get(i)));
+        }
+        LineDataSet lineDataSet = new LineDataSet(entries, "Water Consumption");
+        lineDataSet.setLineWidth(4);
+        lineDataSet.setColor(Color.BLUE);
+        lineDataSet.setDrawCircles(true);
+        lineDataSet.setDrawCircleHole(true);
+        lineDataSet.setCircleColor(Color.BLUE);
+        lineDataSet.setCircleHoleColor(Color.GRAY);
+        lineDataSet.setCircleRadius(5);
+        lineDataSet.setCircleHoleRadius(4);
+        lineDataSet.setValueTextSize(15);
+        lineDataSet.setValueTextColor(Color.BLUE);
+        lineDataSet.enableDashedLine(5, 5, 0);
+
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFillColor(Color.parseColor("#006DFF"));
+
+        LineData data = new LineData(lineDataSet);
         mpLineChart.setData(data);
         mpLineChart.animateX(5000);
         mpLineChart.invalidate();
-    }
-    private ArrayList<Entry> dataValues1() {
-        ArrayList<Entry> dataVals = new ArrayList<Entry>();
-        dataVals.add(new Entry(0, 20));
-        dataVals.add(new Entry(1, 24));
-        dataVals.add(new Entry(2, 2));
-        dataVals.add(new Entry(3, 10));
-        dataVals.add(new Entry(4, 28));
-
-        return dataVals;
-    }
-
-    private ArrayList<Entry> dataValues2() {
-        ArrayList<Entry> dataVals = new ArrayList<Entry>();
-        dataVals.add(new Entry(1, 15));
-        dataVals.add(new Entry(2, 20));
-        dataVals.add(new Entry(3, 25));
-        dataVals.add(new Entry(4, 1));
-        dataVals.add(new Entry(5, 30));
-
-        return dataVals;
-    }
-
-    private ArrayList<Entry> dataValues3() {
-        ArrayList<Entry> dataVals = new ArrayList<Entry>();
-        dataVals.add(new Entry(2, 10));
-        dataVals.add(new Entry(3, 15));
-        dataVals.add(new Entry(4, 5));
-        dataVals.add(new Entry(5, 20));
-        dataVals.add(new Entry(6, 13));
-
-        return dataVals;
     }
 }
