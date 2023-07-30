@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN = 4000;
+    private static int SPLASH_SCREEN = 5000;
     Animation topAnim, bottomAnim;
     ImageView image;
     TextView logo;
@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        // Check the login status
+        boolean isLoggedIn = checkLoginStatus();
 
         //animations
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
@@ -37,10 +40,25 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(intent);
+                if (isLoggedIn) {
+                    // User is already logged in, redirect to the home screen
+                    Intent intent = new Intent(MainActivity.this, Home1Activity.class);
+                    startActivity(intent);
+                } else {
+                    // User is not logged in, show MainActivity2
+                    Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                    startActivity(intent);
+                }
                 finish();
             }
         }, SPLASH_SCREEN);
+    }
+    // Helper method to check login status
+    private boolean checkLoginStatus() {
+        // Implement your login status check logic here
+        // For example, you can use SharedPreferences to store login status
+        // and check if the user is logged in or not
+        // Replace this with your actual login status check code
+        return false;
     }
 }

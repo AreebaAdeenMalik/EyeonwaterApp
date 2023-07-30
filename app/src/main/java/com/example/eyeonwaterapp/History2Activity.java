@@ -152,7 +152,7 @@ public class History2Activity extends DrawerBaseActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_MONTH, -6 + index); // Start from the first day (index 0)
                 Date date = calendar.getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd", Locale.US);
                 return sdf.format(date);
             }
         });

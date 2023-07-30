@@ -45,7 +45,7 @@ public class History1Activity extends DrawerBaseActivity {
         DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = dateFormat.format(calendar.getTime());
         TextView textViewDate = findViewById(R.id.textView6);
         textViewDate.setText(currentDate);
@@ -122,7 +122,7 @@ public class History1Activity extends DrawerBaseActivity {
         LineDataSet lineDataSet1 = new LineDataSet(dataValues1(hourDataList), "Tap 1");
 
         lineDataSet1.setLineWidth(4);
-        lineDataSet1.setColor(Color.RED);
+        lineDataSet1.setColor(Color.BLUE);
         lineDataSet1.setDrawCircles(true);
         lineDataSet1.setDrawCircleHole(true);
         lineDataSet1.setCircleColor(Color.BLUE);

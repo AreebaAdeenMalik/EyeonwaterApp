@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     Button loginbutton, regbutton, forgetbtn;
     CheckBox showcheck_btn;
     FirebaseAuth auth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,24 +61,31 @@ public class LoginActivity extends AppCompatActivity {
                 email = loginemail.getText().toString();
                 password = loginpassword.getText().toString();
 
-               if (email.isEmpty()) {
+                if (email.isEmpty()) {
                     loginemail.setError("Please enter your Email");
                     loginemail.requestFocus();
-                }else if (password.isEmpty()) {
+                } else if (password.isEmpty()) {
                     loginpassword.setError("Please enter your Password");
                     loginpassword.requestFocus();
-                }else {
-                    auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                startActivity(new Intent(LoginActivity.this, Home1Activity.class));
-                                finish();
-                            }else {
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    // Check if the user is already logged in
+                    if (auth.getCurrentUser() != null) {
+                        // User is already logged in, proceed to Home1Activity
+                        startActivity(new Intent(LoginActivity.this, Home1Activity.class));
+                        finish();
+                    } else {
+                        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    startActivity(new Intent(LoginActivity.this, Home1Activity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
