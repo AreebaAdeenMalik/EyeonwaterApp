@@ -13,13 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="32dp"
         android:src="@drawable/drop2"
         android:transitionName="logo_image"
-        app:layout_constraintBottom_toTopOf="@+id/Login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,8 +25,8 @@
         android:id="@+id/Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:padding="20dp"
         android:text="Eye On Water"
@@ -39,9 +37,10 @@
         android:transitionName="logo_text"
         app:layout_constraintBottom_toTopOf="@+id/email1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.121" />
 
     <EditText
         android:id="@+id/email1"
@@ -124,7 +123,7 @@
         android:layout_below="@+id/button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="@color/color3"
+        android:background="@drawable/rounded_button_background"
         android:backgroundTint="@color/color3"
         android:gravity="center"
         android:text="Login"
@@ -159,7 +158,7 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
-        android:background="@color/color3"
+        android:background="@drawable/rounded_button_background"
         android:backgroundTint="@color/color3"
         android:gravity="center"
         android:text="Create Account"
