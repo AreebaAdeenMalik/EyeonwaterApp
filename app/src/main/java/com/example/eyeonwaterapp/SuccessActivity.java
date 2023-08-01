@@ -22,7 +22,6 @@ public class SuccessActivity extends AppCompatActivity {
         successMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(SuccessActivity.this, "Password has been updated", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SuccessActivity.this, LoginActivity.class);
                 startActivity(intent);
             }

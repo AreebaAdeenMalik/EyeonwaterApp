@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_mytaps"
+        <item android:id="@+id/nav_about"
             android:icon="@drawable/baseline_home_24"
-            android:title="My Taps"/>
+            android:title="About"/>
 
         <item android:id="@+id/nav_history1"
             android:icon="@drawable/baseline_history_24"

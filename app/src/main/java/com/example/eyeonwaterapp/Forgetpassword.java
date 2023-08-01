@@ -21,27 +21,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Forgetpassword extends AppCompatActivity {
-
     ImageView back3;
     private EditText edittextemail;
     private Button btn;
     private String email;
     ProgressDialog dialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgetpassword);
 
         back3 = findViewById(R.id.ivBack2);
-
         edittextemail = (EditText) findViewById(R.id.editTextTextEmailAddress2);
         btn = findViewById(R.id.button);
 
         dialog = new ProgressDialog(Forgetpassword.this);
         dialog.setCancelable(false);
         dialog.setMessage("Loading....");
-
         back3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +45,6 @@ public class Forgetpassword extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,17 +58,14 @@ public class Forgetpassword extends AppCompatActivity {
             }
         });
     }
-
     private void forgotPassword() {
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
-
         auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();
                 if (task.isSuccessful()){
-                    Toast.makeText(Forgetpassword.this, "Check Your Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Forgetpassword.this, "Check Your Email", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(Forgetpassword.this, SuccessActivity.class));
                     finish();
                 }else {

@@ -15,7 +15,7 @@
             android:src="@drawable/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
@@ -25,24 +25,21 @@
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="60dp"
             android:foregroundGravity="center"
             android:src="@drawable/drop2"
             android:textAlignment="center"
             android:transitionName="logo_image"
-            app:layout_constraintBottom_toTopOf="@+id/Login1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.82" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/Login1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
+            android:layout_marginTop="40dp"
             android:foregroundGravity="center"
             android:gravity="center"
             android:padding="20dp"
@@ -52,17 +49,17 @@
             android:textSize="45sp"
             android:textStyle="bold"
             android:transitionName="logo_text"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
             android:id="@+id/textView5"
             style="@style/Widget.MaterialComponents.Snackbar.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginTop="136dp"
             android:foregroundGravity="center"
             android:gravity="center"
             android:scrollbarDefaultDelayBeforeFade="500"
@@ -73,16 +70,18 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.443"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Login1" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginBottom="132dp"
+            android:layout_marginBottom="160dp"
             android:background="@drawable/round_button"
+            android:gravity="center"
             android:text="Yes"
             android:textAlignment="center"
             android:textColor="#0C0909"
@@ -90,23 +89,9 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.281"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginBottom="132dp"
-            android:background="@drawable/round_button"
-            android:text="No"
-            android:textAlignment="center"
-            android:textColor="#0C0909"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.312"
-            app:layout_constraintStart_toEndOf="@+id/button" />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintVertical_bias="0.442" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
