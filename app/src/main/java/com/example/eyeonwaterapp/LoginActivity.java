@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     EditText loginemail, loginpassword;
@@ -37,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         loginpassword = findViewById(R.id.password);
         loginbutton = findViewById(R.id.loginbtn);
         regbutton = findViewById(R.id.registerbtn);
-
         forgetbtn = findViewById(R.id.button);
 
         showcheck_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -52,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         regbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

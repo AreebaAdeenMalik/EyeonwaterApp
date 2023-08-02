@@ -1,5 +1,6 @@
 package com.example.eyeonwaterapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +44,16 @@ public class History1Activity extends DrawerBaseActivity {
         allocateActivityTitle("Daily History");
 
         FirebaseApp.initializeApp(this);
-        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
+        // Check if the user is logged in. If not, redirect to MainActivity
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) {
+            startActivity(new Intent(History1Activity.this, MainActivity.class));
+            finish();
+            return; // Add this to prevent further execution of the code in this activity
+        }
+        String userId = firebaseAuth.getCurrentUser().getUid();
+
+        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap1").child("Data");
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,7 +90,8 @@ public class History1Activity extends DrawerBaseActivity {
         fetchDataFromFirebase();
     }
     private void fetchDataFromFirebase() {
-        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap1").child("Data");
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

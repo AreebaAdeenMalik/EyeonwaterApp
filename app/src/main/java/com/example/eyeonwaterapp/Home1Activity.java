@@ -28,7 +28,6 @@ import java.util.Calendar;
 
 public class Home1Activity extends DrawerBaseActivity {
     ActivityHome1Binding activityHome1Binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,20 +35,22 @@ public class Home1Activity extends DrawerBaseActivity {
         setContentView(activityHome1Binding.getRoot());
         allocateActivityTitle("Dashboard");
 
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);   // Enable offline persistence if needed
+
         // Check if the user is logged in. If not, redirect to MainActivity
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getInstance().getCurrentUser() == null) {
             startActivity(new Intent(Home1Activity.this, MainActivity.class));
             finish();
             return; // Add this to prevent further execution of the code in this activity
         }
+        String userId = firebaseAuth.getCurrentUser().getUid();
 
-        FirebaseApp.initializeApp(this);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);   // Enable offline persistence if needed
-
-        DatabaseReference tapRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
-        DatabaseReference tap1Ref = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Controls").child("Solenoid");
-        DatabaseReference tap2Ref = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap2").child("Data");
-        DatabaseReference tap3Ref = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap3").child("Data");
+        DatabaseReference tapRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap1").child("Data");
+        DatabaseReference tap1Ref = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap1").child("Controls").child("Solenoid");
+        DatabaseReference tap2Ref = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap2").child("Data");
+        DatabaseReference tap3Ref = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap3").child("Data");
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,7 +80,7 @@ public class Home1Activity extends DrawerBaseActivity {
                 totalTextView.setText(String.valueOf(sum));
                 Log.d("Home1Activity", "Total Sum: " + sum);
                 // Check if the reading in tapRef is greater than 200 and show notification if true
-                if (sum > 200) {
+                if (sum > 400) {
                     showNotification();
                 }
             }
@@ -94,11 +95,15 @@ public class Home1Activity extends DrawerBaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Retrieve the sensor data here
-                int Data = snapshot.getValue(Integer.class);
-                // Update your UI or perform any necessary actions with the sensor data
-                waterFlowTextView2.setText(String.valueOf(Data));
+                Integer Data = snapshot.getValue(Integer.class);
+                if (Data != null) {
+                    // Data is not null, proceed with your logic
+                    waterFlowTextView2.setText(String.valueOf(Data));
+                } else {
+                    // Update your UI or perform any necessary actions with the sensor data
+                    waterFlowTextView2.setText("0");
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //handle any errors
@@ -107,10 +112,14 @@ public class Home1Activity extends DrawerBaseActivity {
         tap3Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Retrieve the sensor data here
-                int Data = snapshot.getValue(Integer.class);
-                // Update your UI or perform any necessary actions with the sensor data
-                waterFlowTextView3.setText(String.valueOf(Data));
+                Integer Data = snapshot.getValue(Integer.class);
+                if (Data != null) {
+                    // Data is not null, proceed with your logic
+                    waterFlowTextView3.setText(String.valueOf(Data));
+                } else {
+                    // Update your UI or perform any necessary actions with the sensor data
+                    waterFlowTextView3.setText("0");
+                }
             }
 
             @Override
@@ -122,7 +131,7 @@ public class Home1Activity extends DrawerBaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // Retrieve the switch state here
-                boolean Solenoid = snapshot.getValue(Boolean.class);
+                boolean Solenoid = Boolean.TRUE.equals(snapshot.getValue(Boolean.class));
             }
 
             @Override

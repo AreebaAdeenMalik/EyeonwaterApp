@@ -3,6 +3,7 @@ package com.example.eyeonwaterapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,7 +56,9 @@ public class History2Activity extends DrawerBaseActivity {
         allocateActivityTitle("Weekly History");
 
         FirebaseApp.initializeApp(this);
-        weekRef = FirebaseDatabase.getInstance().getReference().child("Taps").child("Tap1").child("Data");
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        weekRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap1").child("Data");
 
         // Calculate the date seven days ago
         Calendar calendar = Calendar.getInstance();
@@ -65,7 +69,6 @@ public class History2Activity extends DrawerBaseActivity {
 
         calendar.add(Calendar.DAY_OF_MONTH, -7);
         Date sevenDaysAgo = calendar.getTime();
-
         weekRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

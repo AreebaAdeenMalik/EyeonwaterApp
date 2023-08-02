@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
     EditText signupname, signupusername, signuppassword, signupemail;
@@ -80,6 +83,12 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            FirebaseUser user = auth.getCurrentUser();
+                            if (user != null) {
+                                String userId = user.getUid();
+                                // Store the user ID in the Realtime Database
+                                saveUserIdToDatabase(userId);
+                            }
                             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                             finish();
                         }else {
@@ -95,6 +104,22 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+    private void saveUserIdToDatabase(String userId){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference usersRef = mDatabase.child("Users");
+        usersRef.child(userId).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    // User ID stored successfully
+                    Toast.makeText(SignupActivity.this, "User ID stored successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle error while storing user ID
+                    Toast.makeText(SignupActivity.this, "Error storing user ID", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
