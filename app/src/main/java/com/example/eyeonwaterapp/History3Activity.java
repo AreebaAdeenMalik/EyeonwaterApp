@@ -87,6 +87,8 @@ public class History3Activity extends DrawerBaseActivity {
                 Log.d("History3Activity", "Total Sum: " + monthsum);
 
                 LineDataSet lineDataSet1 = new LineDataSet(dataValues1(snapshot), "Tap 1");
+                // Set the custom value formatter to the LineDataSet
+                lineDataSet1.setValueFormatter(new IntegerValueFormatter());
                 ArrayList<LineDataSet> dataSets = new ArrayList<>();
                 dataSets.add(lineDataSet1);
 
@@ -105,8 +107,8 @@ public class History3Activity extends DrawerBaseActivity {
                 lineDataSet1.setCircleHoleColor(Color.GRAY);
                 lineDataSet1.setCircleRadius(5);
                 lineDataSet1.setCircleHoleRadius(4);
-                lineDataSet1.setValueTextSize(15);
-                lineDataSet1.setValueTextColor(Color.BLUE);
+                lineDataSet1.setValueTextSize(10);
+                lineDataSet1.setValueTextColor(Color.BLACK);
                 lineDataSet1.enableDashedLine(5, 5, 0);
 
                 lineDataSet1.setDrawFilled(true);
@@ -191,5 +193,11 @@ public class History3Activity extends DrawerBaseActivity {
             }
         }
         return dataVals;
+    }
+    public class IntegerValueFormatter extends ValueFormatter {
+        @Override
+        public String getFormattedValue(float value) {
+            return String.valueOf((int) value);
+        }
     }
 }

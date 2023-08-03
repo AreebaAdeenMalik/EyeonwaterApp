@@ -56,8 +56,8 @@ public class History2Activity extends DrawerBaseActivity {
         allocateActivityTitle("Weekly History");
 
         FirebaseApp.initializeApp(this);
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String userId = mAuth.getCurrentUser().getUid();
         weekRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("Taps").child("Tap1").child("Data");
 
         // Calculate the date seven days ago
@@ -145,6 +145,9 @@ public class History2Activity extends DrawerBaseActivity {
         mpLineChart.getAxisRight().setEnabled(false); // Disable the right Y-axis
 
         XAxis xAxis = mpLineChart.getXAxis();
+        YAxis yAxisLeft = mpLineChart.getAxisLeft();
+        yAxisLeft.setAxisMinimum(0f);
+
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setLabelCount(7); // Set the label count to 7 for 7 days
@@ -174,6 +177,9 @@ public class History2Activity extends DrawerBaseActivity {
             entries.add(new Entry(i, dataValues.get(i)));
         }
         LineDataSet lineDataSet = new LineDataSet(entries, "Water Consumption");
+        // Set the custom value formatter to the LineDataSet
+        lineDataSet.setValueFormatter(new IntegerValueFormatter());
+
         lineDataSet.setLineWidth(4);
         lineDataSet.setColor(Color.BLUE);
         lineDataSet.setDrawCircles(true);
@@ -182,8 +188,8 @@ public class History2Activity extends DrawerBaseActivity {
         lineDataSet.setCircleHoleColor(Color.GRAY);
         lineDataSet.setCircleRadius(5);
         lineDataSet.setCircleHoleRadius(4);
-        lineDataSet.setValueTextSize(15);
-        lineDataSet.setValueTextColor(Color.BLUE);
+        lineDataSet.setValueTextSize(10);
+        lineDataSet.setValueTextColor(Color.BLACK);
         lineDataSet.enableDashedLine(5, 5, 0);
 
         lineDataSet.setDrawFilled(true);
@@ -193,5 +199,11 @@ public class History2Activity extends DrawerBaseActivity {
         mpLineChart.setData(data);
         mpLineChart.animateX(5000);
         mpLineChart.invalidate();
+    }
+    public class IntegerValueFormatter extends ValueFormatter {
+        @Override
+        public String getFormattedValue(float value) {
+            return String.valueOf((int) value);
+        }
     }
 }
