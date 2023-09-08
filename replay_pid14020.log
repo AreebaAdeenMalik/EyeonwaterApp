@@ -1,0 +1,34 @@
+JvmtiExport can_access_local_variables 0
+JvmtiExport can_hotswap_or_post_breakpoint 0
+JvmtiExport can_post_on_exceptions 0
+# 167 ciObject found
+instanceKlass org/gradle/internal/execution/history/OutputsCleaner$1
+instanceKlass org/gradle/internal/snapshot/SnapshotUtil$$Lambda$1863
+instanceKlass org/gradle/internal/execution/steps/RemovePreviousOutputsStep$$Lambda$1862
+instanceKlass org/gradle/internal/execution/steps/RemovePreviousOutputsStep$$Lambda$1861
+instanceKlass org/gradle/internal/execution/steps/RemovePreviousOutputsStep$1
+instanceKlass org/gradle/internal/execution/steps/RemovePreviousOutputsStep$$Lambda$1860
+instanceKlass org/gradle/internal/execution/history/impl/OutputSnapshotUtil$SnapshotFilteringVisitor$1
+instanceKlass org/gradle/internal/execution/history/impl/OutputSnapshotUtil$$Lambda$1859
+instanceKlass org/gradle/internal/snapshot/SnapshotUtil$$Lambda$1858
+instanceKlass org/gradle/internal/execution/history/impl/OutputSnapshotUtil$$Lambda$1857
+instanceKlass org/gradle/internal/execution/history/impl/OutputSnapshotUtil
+instanceKlass org/gradle/internal/execution/history/OverlappingOutputs
+instanceKlass org/gradle/api/internal/provider/AbstractProperty$1
+instanceKlass com/android/build/gradle/tasks/PackageAndroidArtifact$CreationAction$$Lambda$1856
+instanceKlass com/android/build/gradle/tasks/PackageAndroidArtifact$CreationAction$$Lambda$1855
+instanceKlass com/android/build/gradle/tasks/PackageAndroidArtifact$CreationAction$$Lambda$1854
+instanceKlass com/android/build/gradle/tasks/PackageAndroidArtifact$CreationAction$$Lambda$1853
+instanceKlass com/android/build/gradle/tasks/PackageAndroidArtifact$CreationAction$$Lambda$1852
+instanceKlass com/android/build/gradle/internal/variant/ApplicationVariantFactory$restrictEnabledOutputs$1
+instanceKlass com/android/ide/common/build/GenericBuiltArtifactsSplitOutputMatcher$computeBestArtifact$match$1
+instanceKlass com/android/ide/common/build/GenericBuiltArtifactsSplitOutputMatcher
+instanceKlass com/android/ide/common/build/GenericBuiltArtifact
+instanceKlass com/android/tools/build/gradle/internal/profile/IntegerOption$1
+instanceKlass org/gradle/internal/watch/vfs/impl/WatchingVirtualFileSystem$$Lambda$1851
+instanceKlass jdk/internal/math/FormattedFloatingDecimal$2
+instanceKlass jdk/internal/math/FormattedFloatingDecimal
+instanceKlass org/gradle/launcher/daemon/registry/DaemonStopEvent$Serializer
+instanceKlass org/gradle/launcher/daemon/registry/DaemonStopEvent
+instanceKlass org/gradle/cache/internal/locklistener/DefaultFileLockContentionHandler$ContendedAction$1
+instanceKlass org/gradle/workers/internal/WorkerDaemonClientsManager$$Lambda$1850

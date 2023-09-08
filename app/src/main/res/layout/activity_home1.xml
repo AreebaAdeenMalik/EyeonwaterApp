@@ -142,7 +142,7 @@
                                                             android:layout_width="80dp"
                                                             android:layout_height="match_parent"
                                                             android:src="@drawable/tap1" />
-
+                                                                />
                                                         <RelativeLayout
                                                             android:layout_width="wrap_content"
                                                             android:layout_height="wrap_content"
@@ -177,7 +177,8 @@
                                                             android:layout_width="wrap_content"
                                                             android:layout_height="48dp"
                                                             android:layout_marginStart="10dp"
-                                                            android:text="Switch"
+                                                            android:text="Tap 1  "
+                                                            android:textStyle="bold"
                                                             android:textSize="20sp"
                                                             android:textAlignment="center" />
 
@@ -242,7 +243,8 @@
                                                             android:layout_height="48dp"
                                                             android:layout_marginStart="10dp"
                                                             android:textSize="20sp"
-                                                            android:text="Switch"
+                                                            android:text="Tap 2  "
+                                                            android:textStyle="bold"
                                                             android:textAlignment="center" />
 
                                                 </LinearLayout>
@@ -307,7 +309,8 @@
                                                             android:layout_height="48dp"
                                                             android:layout_marginStart="10dp"
                                                             android:textSize="20sp"
-                                                            android:text="Switch"
+                                                            android:text="Tap 3  "
+                                                            android:textStyle="bold"
                                                             android:textAlignment="center" />
 
                                                 </LinearLayout>
